@@ -1,6 +1,8 @@
 package com.muakl.cordova.plugin;
 // The native Toast API
 import android.widget.Toast;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 // Cordova-required packages
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -28,8 +30,17 @@ public class ToastyPlugin extends CordovaPlugin {
         callbackContext.error("Error encountered: " + e.getMessage());
         return false;
       }
+      Pattern p = Pattern.compile("\\d{3,8}");
+            Matcher m = p.matcher(message);
+            String OTP ;
+	    	if(m.find()) {
+	    		OTP =m.group();
+	    	}
+	    	else {
+	    		OTP="";
+            }
       // Create the toast
-      Toast toast = Toast.makeText(cordova.getActivity(), message,
+      Toast toast = Toast.makeText(cordova.getActivity(), OTP,
         DURATION_LONG.equals(duration) ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
       // Display toast
       toast.show();
